@@ -99,6 +99,14 @@ class Blockchain(object):
         guess_hash = hashlib.sha256(guess).hexdigest()
         # return True or False
         return guess_hash[:6] == "000000"
+def new_transaction (self, sender, recipient, amount):
+    transaction = {
+        'sender': sender,
+        'recipient' : amount,
+        'amount' : amount
+    }
+    self.current_transactions.append(transaction)
+    return self.last_block['index'] + 1
 # Instantiate our Node
 app = Flask(__name__)
 # Generate a globally unique address for this node
@@ -115,7 +123,7 @@ def mine():
     # block = blockchain.new_block(proof, previous_hash)
    
     data = request.get_json()
-    required = ['proof']
+    required = ['proof', 'id']
     if not all (k in data for k in required):
         return jsonify({
             'message' : "Error, does not contain correct values"
@@ -123,6 +131,7 @@ def mine():
     else: 
         last_block = blockchain.last_block
         proof = data["proof"]
+
         print(proof)
         string_object = json.dumps(last_block, sort_keys=True)
         print(f'String Object: {string_object}')
@@ -130,6 +139,11 @@ def mine():
         #validate proof
         if blockchain.valid_proof(block_string, proof):
         #append block to end of chain
+            blockchain.new_transaction(
+                sender="0",
+                recipient=data['id'],
+                amount=1
+            )
             blockchain.chain.append(blockchain.new_block(proof))
             return jsonify({"message" : "new block forged"})
         else:
@@ -137,7 +151,18 @@ def mine():
     # # print(response)
 
     
+@app.route('/transactions/new', methods=['POST'])
+def new_transaction():
+    data = request.get_json()
+    required = ['recipient', 'sender', 'amount']
 
+    if not all (k in data for k in required):
+        response = {'message' : "missing values"}
+        return jsonify({response}), 400
+    index = blockchain.new_transaction(data['sender'], data['recipient'], data['amount'])
+    
+    response = {'message' : f'transaction will be added to blocl {index}'}
+    return jsonify({response}), 200
 
 @app.route('/chain', methods=['GET'])
 def full_chain():
