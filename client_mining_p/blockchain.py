@@ -148,7 +148,7 @@ def mine():
             return jsonify({"message" : "new block forged"})
         else:
             return jsonify({"message" : "invalid proof"})
-    # # print(response)
+    # ## print(response)
 
     
 @app.route('/transactions/new', methods=['POST'])
