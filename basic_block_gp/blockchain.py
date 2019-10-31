@@ -95,7 +95,7 @@ class Blockchain(object):
         guess = f'{block_string}{proof}'.encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
         # return True or False
-        return guess_hash[:3] == "000000"
+        return guess_hash[:3] == "000"
 # Instantiate our Node
 app = Flask(__name__)
 # Generate a globally unique address for this node
