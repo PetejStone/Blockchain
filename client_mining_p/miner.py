@@ -39,7 +39,7 @@ def valid_proof(block_string, proof):
     guess = f'{block_string}{proof}'.encode()
     guess_hash = hashlib.sha256(guess).hexdigest()
     # return True or False
-    return guess_hash[:6] == "000000"
+    return guess_hash[:5] == "00000"
 
 
 if __name__ == '__main__':
@@ -72,7 +72,7 @@ if __name__ == '__main__':
         # new_proof = ???
         # data = request.get_json()
         new_proof = proof_of_work(data)
-        print(new_proof)
+        # print(new_proof)
         # When found, POST it to the server {"proof": new_proof, "id": id}
         post_data = {"proof": new_proof, "id": id}
 
@@ -86,4 +86,4 @@ if __name__ == '__main__':
             coins_mined += 1
             print(f'total coins mined: {coins_mined}')
         else:
-            print(data["message"])
+           print(data["message"])
