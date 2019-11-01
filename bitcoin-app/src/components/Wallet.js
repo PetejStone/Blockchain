@@ -20,18 +20,18 @@ function Wallet() {
              let transactions = []
              res.data.chain.map(block => {
                  transactions.push(block.transactions[0])
-                //  console.log(transactions)
+                 //console.log(transactions)
              })
              setTransactions(transactions)
-             transactions.map(transaction => {
-                 if (transaction !== undefined) {
-                    setCoins(coins + transaction.amount)
-                 }
-                 
-             })
+             
          })
         //console.log(transactions)
-        
+        // transactions.map(transaction => {
+        //     if (transaction !== undefined) {
+        //        setCoins(coins + transaction.amount)
+        //     }
+            
+        // })
         
         
     }, [])
@@ -48,7 +48,20 @@ function Wallet() {
 
    
     
-      
+    const countAmount = () => {
+        let count = 0
+        for (let i=1 ; i < transactions.length ; i ++) {
+       
+            count += transactions[i].amount
+             
+         }
+         return count
+    }
+
+    let count = countAmount()
+    
+    
+    
 
 
     return (
@@ -59,10 +72,7 @@ function Wallet() {
                 <input onChange={e => setId(e.target.value)} type="text" placeholder="What is your ID?" value={id}/>
             </form>
 
-            <div>
-                
-                {coins}
-            </div>
+            <h3>Coins Mined: {count}</h3>
         </div>
     )
 }
