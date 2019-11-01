@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-
+import './wallet.css'
 function Wallet() {
     const [id, setId] = useState('')
     const [chain, setChain] = useState('')
@@ -65,7 +65,7 @@ function Wallet() {
 
 
     return (
-        <div>
+        <div className="wrapper">
             <h1>Hello</h1>
 
             <form onSubmit={e=>handleId(e)}>
@@ -73,6 +73,19 @@ function Wallet() {
             </form>
 
             <h3>Coins Mined: {count}</h3>
+
+            <h4>Transactions:</h4>
+            <div  className="block-wrapper">
+                {transactions && transactions.map(transaction => {
+                    if (transaction !== undefined) {
+                        return <div className="block">
+                        <p>Amount Received: {transaction.amount}</p>
+                        <p>Recipient: {transaction.recipient}</p>
+                        <p>Sender: {transaction.sender}</p>
+                        </div>
+                    }
+                })}
+            </div>
         </div>
     )
 }
