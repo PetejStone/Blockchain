@@ -85,8 +85,8 @@ class Blockchain(object):
     #     guess = f'{block_string}{proof}'.encode()
     #     guess_hash = hashlib.sha256(guess).hexdigest()
     #     return proof
-    # @staticmethod
-    def valid_proof(self, block_string, proof):
+    @staticmethod
+    def valid_proof(block_string, proof):
         """
         Validates the Proof:  Does hash(block_string, proof) contain 3
         leading zeroes?  Return true if the proof is valid
@@ -100,7 +100,7 @@ class Blockchain(object):
         guess = f'{block_string}{proof}'.encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
         # return True or False
-        return guess_hash[:3] == "000"
+        return guess_hash[:6] == "000000"
     def new_transaction (self, sender, recipient, amount):
         transaction = {
             'sender': sender,

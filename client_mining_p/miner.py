@@ -39,7 +39,7 @@ def valid_proof(block_string, proof):
     guess = f'{block_string}{proof}'.encode()
     guess_hash = hashlib.sha256(guess).hexdigest()
     # return True or False
-    return guess_hash[:5] == "00000"
+    return guess_hash[:6] == "000000"
 
 
 if __name__ == '__main__':
@@ -51,10 +51,10 @@ if __name__ == '__main__':
     
     coins_mined = 0
     # Load ID
-    # f = open("my_id.txt", "r")
-    id = "peter"
-    # print("ID is", id)
-    # f.close()
+    f = open("my_id.txt", "r")
+    id = f.read()
+    print("ID is", id)
+    f.close()
 
     # Run forever until interrupted
     while True:
