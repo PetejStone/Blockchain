@@ -8,6 +8,8 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS,cross_origin
 app=Flask(__name__)
 CORS(app, support_credentials=True)
+app.config['CORS_HEADERS'] = 'Content-Type'
+
 class Blockchain(object):
     def __init__(self):
         self.chain = []
@@ -185,6 +187,27 @@ def last_block_call():
     response = blockchain.last_block
 
     return jsonify(response), 200
+
+@app.route('/user/id', methods=['POST'])
+# @cross_origin()
+def new_id():
+    data = request.get_json()
+    required = ['id']
+    id_ = data['id']
+    response = {'message' : f'transaction will be added to block {id_}'}
+    f = open("my_id.txt", "r")
+    id = f.read()
+    print("ID is", id)
+    name = id.replace(id, id_)
+    f.close()
+
+  
+
+    f = open("my_id.txt", "wt")
+    f.write(name)
+    f.close()
+    return jsonify(response), 200
+    
     
 @app.route('/', methods=['GET'])
 def home():

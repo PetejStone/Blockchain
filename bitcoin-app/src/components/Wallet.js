@@ -6,11 +6,7 @@ function Wallet() {
     const [chain, setChain] = useState('')
     const [coins, setCoins] = useState(0)
     const [transactions, setTransactions] = useState('')
-    const handleId = (e) => {
-        e.preventDefault()
-        console.log(id)
-    }
-
+   
     useEffect(() => {
          axios.get('http://localhost:5000/chain')
          .then(res => {
@@ -25,29 +21,21 @@ function Wallet() {
              setTransactions(transactions)
              
          })
-        //console.log(transactions)
-        // transactions.map(transaction => {
-        //     if (transaction !== undefined) {
-        //        setCoins(coins + transaction.amount)
-        //     }
-            
-        // })
-        
+    
         
     }, [])
 
-//     useEffect(() => {
-//         axios.post('http://localhost:5000/mine', {proof: id: id})
-//         .then(res => {
-//             console.log(res)
-//         })
-       
-       
-       
-//    })
+    const handleId = (e) => {
+        e.preventDefault()
+        console.log(id)
+        axios.post('http://localhost:5000/user/id', {id: id})
+         .then(res => {
+             console.log(res)
+         })
+         .catch(err => console.log(err))
+     }
 
-   
-    
+
     const countAmount = () => {
         let count = 0
         for (let i=1 ; i < transactions.length ; i ++) {
@@ -69,7 +57,8 @@ function Wallet() {
             <h1>Hello</h1>
 
             <form onSubmit={e=>handleId(e)}>
-                <input onChange={e => setId(e.target.value)} type="text" placeholder="What is your ID?" value={id}/>
+                <input onChange={e => setId(e.target.value)} type="text" placeholder="Change your ID" value={id}/>
+                <button>Submit</button>
             </form>
 
             <h3>Coins Mined: {count}</h3>
