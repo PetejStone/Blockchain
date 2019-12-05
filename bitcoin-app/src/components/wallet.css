@@ -1,0 +1,20 @@
+.block-wrapper {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.block {
+    width: 30%;
+    background-color: white;
+    color: black;
+    border-radius: 15px;
+    margin: 15px;
+}
+
+.wrapper {
+    width: 100%;
+}
